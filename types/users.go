@@ -8,8 +8,8 @@ import (
 
 // TempUser - the temp user for creating a new user
 type TempUser struct {
-	FirstName       string `json:"first_name"`
-	LastName        string `json:"last_name"`
+	FirstName       string `json:"first_name" validate:"required,gte=4"`
+	LastName        string `json:"last_name" validate:"required,gte=4"`
 	Email           string `json:"email" validate:"required,contains=@"`
 	Password        string `json:"-" validate:"required,gte=8"`
 	ConfirmPassword string `json:"-" validate:"required,gte=8"`
@@ -18,10 +18,10 @@ type TempUser struct {
 // User - the user in the system
 type User struct {
 	ID        int64  `json:"id" xorm:"'id' pk autoincr" schema:"id"`
-	FirstName string `json:"first_name" xorm:"first_name" schema:"first_name"`
-	LastName  string `json:"last_name" xorm:"last_name" schema:"last_name"`
+	FirstName string `json:"first_name" xorm:"first_name" schema:"first_name" validate:"required,gte=4"`
+	LastName  string `json:"last_name" xorm:"last_name" schema:"last_name" validate:"required,gte=4"`
 	Email     string `json:"email" xorm:"email" schema:"email" validate:"required,contains=@"`
-	Password  string `json:"-" xorm:"password" schema:"password"`
+	Password  string `json:"-" xorm:"password" schema:"password" validate:"required,gte=8"`
 	Visible   bool   `json:"visible" xorm:"visible" schema:"visible"`
 }
 
