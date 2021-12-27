@@ -30,17 +30,16 @@ var (
 
 	clearDatabase = func() {
 		if db == nil {
-			Fail("unable to run the test because database is missing")
+			Fail("unable to run test because database is missing")
 		}
 
 		truncateUsers()
-
-		return
 	}
 )
 
 var _ = BeforeSuite(func() {
-	db, err := xorm.NewEngine("mysql", "")
+	// connection string - root:pass@tcp(localhost:3306)/grpc
+	db, err = xorm.NewEngine("mysql", "")
 	Ω(err).To(BeNil())
 	dbSql, mock, err = sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
 	Ω(err).To(BeNil())
